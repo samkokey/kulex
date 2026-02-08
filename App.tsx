@@ -7,10 +7,11 @@ import { getLiveChatId, fetchChatMessages } from './services/youtubeService';
 import { FaExclamationTriangle, FaCircleNotch } from 'react-icons/fa';
 
 // ==========================================
-// AYARLAR (Lütfen Bu Kısmı Düzenleyin)
+// AYARLAR (Heroku Config Vars üzerinden gelir)
 // ==========================================
-const API_KEY = 'YOUR_API_KEY_HERE'; // Google Cloud Console'dan aldığınız API Key
-const VIDEO_ID = 'YOUR_VIDEO_ID_HERE'; // Canlı yayının Video ID'si (URL'deki v= parametresi)
+// Localde çalışıyorsanız .env dosyası oluşturup VITE_API_KEY=... şeklinde ekleyin
+const API_KEY = import.meta.env.VITE_API_KEY || ''; 
+const VIDEO_ID = import.meta.env.VITE_VIDEO_ID || '';
 // ==========================================
 
 const App: React.FC = () => {
@@ -39,9 +40,9 @@ const App: React.FC = () => {
   };
 
   const handleStart = async () => {
-    // Basit doğrulama
-    if (API_KEY === 'YOUR_API_KEY_HERE' || VIDEO_ID === 'YOUR_VIDEO_ID_HERE') {
-        setError('Lütfen App.tsx dosyasını açın ve API_KEY ile VIDEO_ID alanlarına kendi bilgilerinizi girin.');
+    // Environment variable kontrolü
+    if (!API_KEY || !VIDEO_ID) {
+        setError('API Key veya Video ID eksik. Lütfen Heroku ayarlarından VITE_API_KEY ve VITE_VIDEO_ID değerlerini giriniz.');
         return;
     }
 
@@ -186,7 +187,7 @@ const App: React.FC = () => {
                         <h2 className="text-2xl font-bold mb-2 font-pixel">BAĞLANILIYOR</h2>
                         <p className="text-slate-400">YouTube Sohbeti ile iletişim kuruluyor...</p>
                         <div className="mt-4 text-xs text-slate-500 font-mono bg-black/30 p-2 rounded">
-                            Video ID: {VIDEO_ID}
+                            Video ID: {VIDEO_ID || 'Belirlenmemiş'}
                         </div>
                     </div>
                 )}
