@@ -10,8 +10,9 @@ import { FaExclamationTriangle, FaCircleNotch } from 'react-icons/fa';
 // AYARLAR (Heroku Config Vars üzerinden gelir)
 // ==========================================
 // Localde çalışıyorsanız .env dosyası oluşturup VITE_API_KEY=... şeklinde ekleyin
-const API_KEY = import.meta.env.VITE_API_KEY || ''; 
-const VIDEO_ID = import.meta.env.VITE_VIDEO_ID || '';
+// import.meta.env erişimini güvenli hale getiriyoruz
+const API_KEY = import.meta.env?.VITE_API_KEY || ''; 
+const VIDEO_ID = import.meta.env?.VITE_VIDEO_ID || '';
 // ==========================================
 
 const App: React.FC = () => {
